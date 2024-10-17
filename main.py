@@ -14,6 +14,10 @@ class Item:
     def calculate_total(self):
         return self.price * self.quantity
 
+    def apply_discount(self):
+        self.price = self.price * self.pay_rate # Using self instead of class itself will be better practice, when we want to change the class variable to specific
+        # class instance
+
 
 item1 = Item("Phone", 100, 5)
 
@@ -23,4 +27,12 @@ item2 = Item("Laptop", 1000, 5)
 
 item2.has_numpad = False
 
-print(Item.pay_rate)
+# print(Item.pay_rate)
+# print(item1.pay_rate)
+# print(item2.pay_rate)
+
+item1.apply_discount()
+print(item1.price)
+item2.pay_rate = 0.7
+item2.apply_discount()
+print(item2.price)
