@@ -1,13 +1,26 @@
 class Customer:
-    def __init__(self, name, age, phone_no, address):
+    def __init__(self, name, age, phone_no, address, bill):
         self.name = name
         self.age = age
         self.phone_no = phone_no
         self.address = address
+        self.bill = bill
+
+    def purchase(self, payment):
+        if payment.type == "card":
+            print("Paying by card")
+        elif payment.type == "cash":
+            print("Paying by cash")
+
+    def calculate_total(self):
+        tax = Tax(self.cust_type)
+        total_bill = self.bill * tax.x_details(self.cust_type)
+        return total_bill
 
     def view_details(self):
         print(self.name, self.age, self.phone_no)
-        print(self.address.get_area(), self.address.get_door_no(), self.address.get_street(), self.address.get_pincode())
+        print(self.address.get_area(), self.address.get_door_no(), self.address.get_street(),
+              self.address.get_pincode())
 
     def update_details(self, add):
         self.address = add
@@ -48,11 +61,33 @@ class Address:
         pass
 
 
+class Payment:
+    def __init__(self, type):
+        self.type = type
+
+
+class Tax:
+    def __int__(self, cust_type):
+        self.cust_type = cust_type
+
+    def x_details(self, cust_type):
+        if self.cust_type == "Student":
+            return 5
+        else:
+            return 10
+
+
 add1 = Address(105, "Harvard", "Aurora", 80014)
 add2 = Address(107, "Mississippi", "Lakewood", 80231)
 
-custom1 = Customer("Ahmed", 36, 7202438963, None)
+custom1 = Customer("Ahmed", 36, 7202438963, None, 600)
 custom1.update_details(add1)
 custom1.view_details()
 
+custom3 = Customer("Ahmed", 36, 7202438963, add2, 500)
 
+custom3.calculate_total()
+
+p1 = Payment("card")
+
+custom1.purchase(p1)
